@@ -30,6 +30,7 @@ module.exports = {
             await rslt.edit(`Done!`)
             await rslt.delete()
             await thread.send(`${message.member.displayName} Needs help with: ${message.content.replace("?thread", '').replace("?Thread", '').replace("?THREAD", '')}`)
+            await thread.send(`Here are some important things you need to know with help threads: \n 1) Do not ping everyone or anyone in the thread because they already get pinged. \n 2) Wait for their response, have patience`)
         })
 
         }else {
