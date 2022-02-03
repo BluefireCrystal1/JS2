@@ -23,9 +23,13 @@ module.exports = {
                 reason: '-',
             });
             
+            await thread.members.add('815121233057808424');
+            await thread.members.add('902922671589830686');
+            await thread.members.add('880313471206588428');
             console.log(`Created thread: ${thread.name}`);
             await rslt.edit(`Done!`)
             await rslt.delete()
+            await thread.send(message.content.replace("?thread", '').replace("?Thread", '').replace("?THREAD", ''))
         })
 
         }else {
