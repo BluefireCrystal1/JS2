@@ -29,7 +29,7 @@ module.exports = {
             console.log(`Created thread: ${thread.name}`);
             await rslt.edit(`Done!`)
             await rslt.delete()
-            await thread.send(`${message.member.displayName} Needs help with: `, message.content.replace("?thread", '').replace("?Thread", '').replace("?THREAD", ''))
+            await thread.send(`${message.member.displayName} Needs help with: ${message.content.replace("?thread", '').replace("?Thread", '').replace("?THREAD", '')}`)
         })
 
         }else {
