@@ -86,6 +86,9 @@ client.on('messageCreate', message => {
     if(command === 'cat'){
         client.commands.get('cat').execute(message, args);
     }
+    if(command === 'whois'){
+        client.commands.get('whois').execute(message, args);
+    }
 });
 
 client.on('interactionCreate', interaction => {
