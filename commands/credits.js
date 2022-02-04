@@ -14,18 +14,14 @@ module.exports = {
         const row = new MessageActionRow()
         .addComponents(
             new MessageButton()
-                .setCustomId('Bluefire')
-                .setLabel('Bluefire')
-                .setStyle('PRIMARY'),
-            new MessageButton()
-                .setCustomId('Beluga')
-                .setLabel('Beluga')
+                .setCustomId('Contact')
+                .setLabel('DM us?')
                 .setStyle('PRIMARY'),
             
         )
         // const row2 = new MessageActionRow()
         // )
-        message.channel.send({ephemeral: true,embeds: [embed], components: [row]})
+        message.channel.send({embeds: [embed], components: [row]})
     }
 }
 

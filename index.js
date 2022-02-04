@@ -1,6 +1,7 @@
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const { token } = require('./config.json');
-
+const intJ = require('./interactions.js')
+const row = require('./commands/credits.js')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 
 const fs = require('fs');
@@ -89,7 +90,7 @@ client.on('messageCreate', message => {
 
 client.on('interactionCreate', interaction => {
 	if (!interaction.isButton()) return;
-	console.log(interaction);
+    intJ.CreditButton(interaction)
 });
 
 

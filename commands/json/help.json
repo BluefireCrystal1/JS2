@@ -42,14 +42,8 @@
         "inline":true
     },
     "thread": {
-        "name": "`?thread name`",
+        "name": "`?thread [name, delete, solved]`",
         "value": "Creates a thread for help",
-        "section": "utility",
-        "inline":true
-    },
-    "threadDelete": {
-        "name": "`?threadDelete name`",
-        "value": "Deletes a thread",
         "section": "utility",
         "inline":true
     },
