@@ -18,7 +18,7 @@ module.exports = {
         .setColor('BLURPLE')
         .setThumbnail(member.displayAvatarURL())
         .setFooter({text: `ID: ${member.id}`})
-        .setTimestamp([4200, 10, 30])
+        .setTimestamp()
         
         message.channel.send({embeds: [embed]})
         

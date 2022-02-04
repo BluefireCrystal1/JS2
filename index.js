@@ -86,7 +86,7 @@ client.on('messageCreate', message => {
     if(command === 'cat'){
         client.commands.get('cat').execute(message, args);
     }
-    if(command === 'whois'){
+    if(command === 'whois'|| command === 'who'){
         client.commands.get('whois').execute(message, args);
     }
 });
@@ -95,10 +95,4 @@ client.on('interactionCreate', interaction => {
 	if (!interaction.isButton()) return;
     intJ.CreditButton(interaction)
 });
-
-
-
-
-
-
 client.login(token);
