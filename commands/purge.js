@@ -1,4 +1,5 @@
 const helpList = require('./json/help.json')
+const easterEgg  = require('./easteregg.js')
 
 module.exports = {
     name: 'purge',
@@ -20,15 +21,8 @@ module.exports = {
 
         })
     }else{
-      chance = 1
-      i = Math.floor(Math.random() * 100)
-      let reply="Premissions"
-      if (i<chance){
-       reply = "Just complete your schooling and then u will understand why rules are written now go and beg owner for permission. and never try to run this command again." 
-      }else{
-      reply = "You do not have enough permissions to run this command"
-      }
-      return message.reply(reply)
+      reply = easterEgg.chanceRoll(5,"You do not have enough permissions", "Just complete your schooling and then u will understand why rules are written now go and beg owner for permission. and never try to run this command again.")
+      message.channel.send(reply)
     }
     }
 }
