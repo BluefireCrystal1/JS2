@@ -27,7 +27,8 @@ async function solvedThread(message) {
     message.reply(`Solved: ${thread.name}`).then(async rslt =>{
         thread = message.channel;
         console.log(thread)       
-        thread.setName("Solved| "+thread.name)
+        // thread.setName("Solved| "+thread.name)
+        await thread.setLocked(true);
         await thread.setArchived(true);
         
         

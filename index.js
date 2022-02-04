@@ -87,6 +87,12 @@ client.on('messageCreate', message => {
     }
 });
 
+client.on('interactionCreate', interaction => {
+	if (!interaction.isButton()) return;
+	console.log(interaction);
+});
+
+
 
 
 
