@@ -97,7 +97,7 @@ client.on('messageCreate', message => {
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return;
-    await intJ.CreditButton(interaction)
     await intJ.tictactoeCheck(interaction)
+    intJ.CreditButton(interaction)
 });
 client.login(token);
