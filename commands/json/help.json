@@ -47,6 +47,12 @@
         "section": "utility",
         "inline":true
     },
+    "threadDelete": {
+        "name": "`?threadDelete name`",
+        "value": "Deletes a thread",
+        "section": "utility",
+        "inline":true
+    },
     "say": {
         "name": "`?say {message}`",
         "value": "Says something for you",
