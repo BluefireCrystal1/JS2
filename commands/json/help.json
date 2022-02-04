@@ -84,12 +84,6 @@
         "section": "utility",
         "inline":true
     },
-    "ttt": {
-        "name": "`?ttt / ?tictactoe`",
-        "value": "Tic tac toe Game",
-        "section": "fun",
-        "inline":true
-    },
     "credits": {
         "name": "`?credits`",
         "value": "**Shows who contributed to the Bot**",

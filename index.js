@@ -90,9 +90,6 @@ client.on('messageCreate', message => {
     if (command === 'whois' || command === 'who') {
         client.commands.get('whois').execute(message, args);
     }
-    if (command === 'ttt' || command === 'tictactoe') {
-        client.commands.get('ttt').execute(message, args);
-    }
 });
 
 client.on('interactionCreate', async interaction => {
