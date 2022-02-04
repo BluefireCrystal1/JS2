@@ -1,22 +1,26 @@
 const row = require('./commands/credits.js')
 
-async function CreditButton(interaction){
-    // console.log(interaction) //i too i want to fix errror dont erase plz
+async function CreditButton(interaction) {
     if (interaction.customId === 'Contact') {
-        interaction.update({content:'**BluefireCrystal#0852** & **Beluga#0099**'})
-        interaction.channel.send({content: 'Also join our server: \`https://discord.gg/FuQtKHgzSp\`'})
-        console.log()
+        interaction.update({ content: '**BluefireCrystal#0852** & **Beluga#0099**' })
+        interaction.channel.send({ content: 'Message us on our server: \`https://discord.gg/FuQtKHgzSp\`' })
     }
-    // const filter = i => i.customId === 'Beluga';
-
-    // const collector = interaction.channel.createMessageComponentCollector({ filter, time: 3000 });
-    
-    // collector.on('collect', async i => {
-    //    if (interation.customId === 'Contact') {
-    //         await i.update({ content: 'A button was clicked!', components: [] });
-    //     }
-    // });// even wiith one button
-    // //Dont add another one it is crashing when u press a button then do again the same vn
-    // collector.on('end', collected => console.log(`Collected ${collected.size} items`));
 }
-module.exports = {CreditButton}
+async function tictactoeCheck(interaction) {
+    const filter = i => i.customId === 'a1';
+    const collector = interaction.message.createMessageComponentCollector({ filter, time: 15000 })
+    collector.on('collect', i => {
+        if (i.user.id === interaction.user.id) {
+            i.reply(`${i.user.id} clicked on this button.`)
+        } else {
+            i.reply({ content: `These buttons aren't for you!`, ephemeral: true });
+        }
+    }
+    )
+};
+
+
+// if (interaction.customId === 'a1') {
+//     interaction.channel.send({ content: 'Pressed a1' })
+// }
+module.exports = { CreditButton ,tictactoeCheck}

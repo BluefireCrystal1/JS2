@@ -3,7 +3,8 @@
         "m": "moderation",
         "u": "utility",
         "i": "info",
-        "f": "fun"
+        "f": "fun",
+        "g": "game"
     },
     "help": {
         "name": "`?help cateogry`",
@@ -74,6 +75,18 @@
     "cat": {
         "name": "`?cat`",
         "value": "Shows an image of a cat",
+        "section": "fun",
+        "inline":true
+    },
+    "whois": {
+        "name": "`?whois / ?who`",
+        "value": "Shows info about a user",
+        "section": "utility",
+        "inline":true
+    },
+    "ttt": {
+        "name": "`?ttt / ?tictactoe`",
+        "value": "Tic tac toe Game",
         "section": "fun",
         "inline":true
     },

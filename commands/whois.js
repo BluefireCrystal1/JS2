@@ -1,8 +1,9 @@
 const { MessageEmbed, GuildMember } = require("discord.js");
+const helpList = require('./json/help.json')
 
 module.exports = {
     name: 'whois',
-    description: 'Shows someones info',
+    description: helpList.whois.value,
     async execute(message, args){
         const member = message.mentions.users.first();
         const d = new Date();
@@ -15,7 +16,7 @@ module.exports = {
                         **Discriminator**: #${member.discriminator}
                         **Nickname**: ${displayName}
                         **Created At**: ${member.createdAt}`)
-        .setColor('BLURPLE')
+        .setColor('BLURPLE')// XD color
         .setThumbnail(member.displayAvatarURL())
         .setFooter({text: `ID: ${member.id}`})
         .setTimestamp()
