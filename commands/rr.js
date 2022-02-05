@@ -29,7 +29,7 @@ module.exports = {
             if(user.bot) return;
             if(!reaction.message.guild) return;
             if(reaction.message.channel.id == channel) {
-                if(reaction.emoji.name === announcementPingEmoji) {
+                if(reaction.emoji.name === announcementPingEmoji) {// dont change anything here
                     await reaction.message.guild.members.cache.get(user.id).roles.add(announcementPingRole);
                 }
                 if(reaction.emoji.name === newsPingEmoji) {

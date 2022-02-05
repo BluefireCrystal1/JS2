@@ -12,7 +12,7 @@ function getHelpElements(embed,filter) {
               }
             }
             catch(err){
-              console.log("1 skipped")
+              console.log("1 skipped: ")
             }
         }
         
@@ -54,7 +54,7 @@ module.exports = {
 
 }
 async function onHelpUse(message) {
-    console.log('Help command used.')
+    console.log('Help command used')
 
 }
 

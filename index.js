@@ -1,7 +1,7 @@
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
-const { token } = require('./config.json');
 const intJ = require('./interactions.js')
 const row = require('./commands/credits.js')
+const { token } = require('./config.json')
 const profanities = require('./commands/json/bad_words.json')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 
@@ -42,6 +42,8 @@ client.on('guildMemberAdd', async member => {
 
 client.on('messageCreate', message => {
     profanities.badwords.forEach(element => {
+        bluefire = client.users.cache.find(user => user.id === '880313471206588428')
+        if(message.author == bluefire) return;
         if (message.content.toLowerCase().includes(element)) {
             message.delete()
             return message.channel.send('Do not swear!').then(msg => {
@@ -104,21 +106,44 @@ client.on('messageCreate', message => {
     }
 });
 
+client.on('messageDelete', (message) =>{
+    deldMsgsChnl = client.channels.cache.get('933317900788441148')
+    const e = new MessageEmbed()
+    .setTitle(`Message Deleted!`)
+    .setDescription(message.content)
+    .setColor('#26F6F9')
+    .setFooter({text: message.author.username, iconURL: message.author.displayAvatarURL()})
+    .setTimestamp()
+    deldMsgsChnl.send({embeds: [e]})
+});
+
+client.on('messageUpdate', (message, newMessage) =>{
+    deldMsgsChnl = client.channels.cache.get('933317900788441148')
+    profanities.badwords.forEach(element => {
+        bluefire = client.users.cache.find(user => user.id === '880313471206588428')
+        if(newMessage.author == bluefire) return;
+        if (newMessage.content.toLowerCase().includes(element)) {
+            message.delete()
+            return newMessage.channel.send('Do not swear!').then(msg => {
+                msg.delete()
+            })
+
+        }
+
+    });
+    const e = new MessageEmbed()
+    .setTitle(`Message Edited!`)
+    .setDescription(`:rewind: **Old Message**: ${message.content}
+                     :fast_forward: **New Message**: ${newMessage.content}`)
+    .setColor('#26F6F9')
+    .setFooter({text: message.author.username, iconURL: message.author.displayAvatarURL()})
+    .setTimestamp(message.editedAt)
+    deldMsgsChnl.send({embeds: [e]})
+});
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return;
     intJ.CreditButton(interaction)
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 client.login(token);
