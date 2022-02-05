@@ -3,7 +3,7 @@ const { token } = require('./config.json');
 const intJ = require('./interactions.js')
 const row = require('./commands/credits.js')
 const profanities = require('./commands/json/bad_words.json')
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 
 const fs = require('fs');
 
@@ -42,12 +42,12 @@ client.on('guildMemberAdd', async member => {
 
 client.on('messageCreate', message => {
     profanities.badwords.forEach(element => {
-        if(message.content.toLowerCase().includes(element) ){
+        if (message.content.toLowerCase().includes(element)) {
             message.delete()
-            return message.channel.send('Do not swear!').then(msg=>{
+            return message.channel.send('Do not swear!').then(msg => {
                 msg.delete()
             })
-            
+
         }
 
     });
@@ -99,10 +99,26 @@ client.on('messageCreate', message => {
     if (command === 'whois' || command === 'who') {
         client.commands.get('whois').execute(message, args);
     }
+    if (command === 'reactionrole' || command === 'rr') {
+        client.commands.get('rr').execute(message, args, client);
+    }
 });
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return;
     intJ.CreditButton(interaction)
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 client.login(token);

@@ -10,12 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.7.0",
+    "@discordjs/voice": "^0.8.0",
     "axios": "^0.25.0",
     "discord.js": "^13.6.0",
     "ffmpeg-static": "^4.4.1",
     "profanities": "^3.0.0",
     "random-jokes-api": "^1.5.9",
     "yt-search": "^2.10.3",
-    "ytdl-core": "^4.10.0"
+    "ytdl-core": "^4.10.1"
   }
 }
