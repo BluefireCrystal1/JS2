@@ -1,8 +1,9 @@
 const { MessageEmbed } = require("discord.js")
 const helpList = require('./json/help.json')
+const badword = require('./json/bad_words.json')
 
 function filter(message) {
-  const badwords = ['fuck', 'fuc','motherfucker', 'bitch', 'dick', 'clitoris', 'anal', 'mf', 'dickhead', 'asshole','fok', 'f u c k', 'anus', 'f o k', 'b i t c h', 'b!tch', 'btch']
+  const badwords= badword.badwords;
   badwords.forEach(element => {
   message = message.replace(element, '---');})
   return message
