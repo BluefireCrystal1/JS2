@@ -1,4 +1,4 @@
-const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed, GuildMember } = require('discord.js');
 const intJ = require('./interactions.js')
 const row = require('./commands/credits.js')
 const { token } = require('./config.json')
@@ -28,11 +28,20 @@ client.once('ready', () => {
 
 });
 
+client.on('guildCreate', guild => {
+    const channel = guild.channels.cache.find(channel => channel.isText() && channel.permissionsFor(guild.me).has("SEND_MESSAGES"));
+    const embed = new MessageEmbed()
+        .setTitle('Thanks for inviting me!')
+        .setDescription(`Hello! My name is BlueKit, Thanks for choosing me, I am made by BluefireCrystal & Beluga! The prefix is \`?\``)
+        .setColor("#2682FF")
+    channel.send({embeds: [embed]})
+
+});
+
 client.on('guildMemberAdd', async member => {
     const welcomeEmbed = new MessageEmbed()
         .setTitle('Welcome!')
-        .setDescription(`Welcome **${member.displayName}** toLowerCase().includes(badwords[i].toLowerCase()) 
-        confirm = true;our server! Follow the ` + member.guild.channels.cache.get('936495957531566080').toString() + ` and have a nice day!`)
+        .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('936495957531566080').toString() + ` and have a nice day!`)
         .setColor("#2682FF")
     const userRole = member.guild.roles.cache.find(role => role.name === 'User')
     member.guild.channels.cache.get('932985164718538752').send({ embeds: [welcomeEmbed] })
@@ -106,7 +115,9 @@ client.on('messageCreate', message => {
     }
 });
 
-client.on('messageDelete', (message) =>{
+client.on('messageDelete', async (message) =>{
+    guild = client.guilds.cache.get('932477320458010664')
+    if(message === guild){
     deldMsgsChnl = client.channels.cache.get('933317900788441148')
     const e = new MessageEmbed()
     .setTitle(`Message Deleted!`)
@@ -114,11 +125,15 @@ client.on('messageDelete', (message) =>{
     .setColor('#26F6F9')
     .setFooter({text: message.author.username, iconURL: message.author.displayAvatarURL()})
     .setTimestamp()
-    deldMsgsChnl.send({embeds: [e]})
+    await deldMsgsChnl.send({embeds: [e]})
+    }else{
+        return;
+    }
 });
 
 client.on('messageUpdate', (message, newMessage) =>{
     deldMsgsChnl = client.channels.cache.get('933317900788441148')
+    if(message.author.id === client.user.id) return;
     profanities.badwords.forEach(element => {
         bluefire = client.users.cache.find(user => user.id === '880313471206588428')
         if(newMessage.author == bluefire) return;

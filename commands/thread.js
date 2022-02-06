@@ -10,7 +10,8 @@ async function deleteThread(message) {
     if(!message.channel.isThread()) return message.reply(reply)
     let thread = message.channel;    
     message.reply(`Deleting....`).then(async rslt =>{
-        thread.setName("Solved| "+thread.name)
+        deldMsgsChnl = message.guild.channels.cache.get('933317900788441148')
+        deldMsgsChnl.send("Solved: "+thread.name)
         await rslt.edit(`Deleting...`)
         await rslt.edit(`Deleting..`)
         await rslt.edit(`Deleting.`)
@@ -23,11 +24,10 @@ async function solvedThread(message) {
     reply = easterEgg.chanceRoll(5,"This is not a thread", "I dont think this is a thread, you need to get your eyes operated.")
     
     if(!message.channel.isThread()) return message.reply(reply)
-    let thread = message.channel;    
+    let thread = message.channel;
     message.reply(`Solved: ${thread.name}`).then(async rslt =>{
         thread = message.channel;
-        console.log(thread)       
-        // thread.setName("Solved| "+thread.name)
+        
         await thread.setLocked(true);
         await thread.setArchived(true);
         
