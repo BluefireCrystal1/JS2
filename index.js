@@ -4,8 +4,9 @@ const row = require('./commands/credits.js')
 const { token } = require('./config.json')
 const profanities = require('./commands/json/bad_words.json')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
-
+const mongoose = require('mongoose');
 const fs = require('fs');
+const { EventEmitter } = require('stream');
 
 client.commands = new Collection();
 
@@ -19,7 +20,8 @@ for (const file of commandFiles) {
 
 const prefix = "?"
 
-client.once('ready', () => {
+client.once('ready', async () => {
+    await mongoose.connect('',{})
     console.log('Connected!')
     client.user.setPresence({
         status: 'dnd'
@@ -49,19 +51,20 @@ client.on('guildMemberAdd', async member => {
 
 })
 
+
+
 client.on('messageCreate', message => {
     profanities.badwords.forEach(element => {
         bluefire = client.users.cache.find(user => user.id === '880313471206588428')
         if(message.author == bluefire) return;
         if (message.content.toLowerCase().includes(element)) {
             message.delete()
-            return message.channel.send('Do not swear!').then(msg => {
-                msg.delete()
-            })
+            return message.channel.send('Do not swear!')
 
         }
 
     });
+
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -115,6 +118,62 @@ client.on('messageCreate', message => {
     }
 });
 
+client.on('messageReactionAdd', async (reaction, user) => {
+    const channel = '936873263768932372'
+    const announcementPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'Announcement Ping')
+    const newsPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'News Ping')
+    const botTesterRole = reaction.message.guild.roles.cache.find(role => role.name === 'Bot Testers.')
+
+        const announcementPingEmoji = '📢'
+        const newsPingEmoji = '📰'
+        const botTesterEmoji = '🤖'
+        
+    if(reaction.message.partial) await reaction.message.fetch();
+    if(reaction.partial) await reaction.fetch();
+    if(user.bot) return;
+    if(!reaction.message.guild) return;
+    if(reaction.message.channel.id == channel) {
+        if(reaction.emoji.name === announcementPingEmoji) {
+            await reaction.message.guild.members.cache.get(user.id).roles.add(announcementPingRole);
+        }
+        if(reaction.emoji.name === newsPingEmoji) {
+            await reaction.message.guild.members.cache.get(user.id).roles.add(newsPingRole);
+        }
+        if(reaction.emoji.name === botTesterEmoji) {
+            await reaction.message.guild.members.cache.get(user.id).roles.add(botTesterRole);
+        }
+    }else {
+        return
+    }
+});
+
+client.on('messageReactionRemove', async (reaction, user) => {
+    const announcementPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'Announcement Ping')
+    const newsPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'News Ping')
+    const botTesterRole = reaction.message.guild.roles.cache.find(role => role.name === 'Bot Testers.')
+        const announcementPingEmoji = '📢'
+        const newsPingEmoji = '📰'
+        const botTesterEmoji = '🤖'
+    const channel = '936873263768932372'
+    if(reaction.message.partial) await reaction.message.fetch(); 
+    if(reaction.partial) await reaction.fetch();
+    if(user.bot) return;
+    if(!reaction.message.guild) return;
+    if(reaction.message.channel.id == channel) {
+        if(reaction.emoji.name === announcementPingEmoji) {
+            await reaction.message.guild.members.cache.get(user.id).roles.remove(announcementPingRole);
+        }
+        if(reaction.emoji.name === newsPingEmoji) {
+            await reaction.message.guild.members.cache.get(user.id).roles.remove(newsPingRole);
+        }
+        if(reaction.emoji.name === botTesterEmoji) {
+            await reaction.message.guild.members.cache.get(user.id).roles.remove(botTesterRole);
+        } 
+    }else {
+        return
+    }
+});
+
 client.on('messageDelete', async (message) =>{
     guild = client.guilds.cache.get('932477320458010664')
     if(message === guild){
@@ -133,19 +192,6 @@ client.on('messageDelete', async (message) =>{
 
 client.on('messageUpdate', (message, newMessage) =>{
     deldMsgsChnl = client.channels.cache.get('933317900788441148')
-    if(message.author.id === client.user.id) return;
-    profanities.badwords.forEach(element => {
-        bluefire = client.users.cache.find(user => user.id === '880313471206588428')
-        if(newMessage.author == bluefire) return;
-        if (newMessage.content.toLowerCase().includes(element)) {
-            message.delete()
-            return newMessage.channel.send('Do not swear!').then(msg => {
-                msg.delete()
-            })
-
-        }
-
-    });
     const e = new MessageEmbed()
     .setTitle(`Message Edited!`)
     .setDescription(`:rewind: **Old Message**: ${message.content}
