@@ -9,7 +9,7 @@ module.exports = {
         const d = new Date();
         if(!message.mentions.users.first()) return message.reply('Specify a member')
         displayName = member.displayName
-        if(member.displayName === undefined) displayName = 'None'
+        if(member.displayName == undefined) displayName = 'None'
         const embed = new MessageEmbed()
         .setAuthor({name: `${member.username}${member.discriminator}`, iconURL: member.displayAvatarURL()})
         .setDescription(`**Name**: ${member.username}

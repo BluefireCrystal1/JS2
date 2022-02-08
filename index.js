@@ -4,7 +4,6 @@ const row = require('./commands/credits.js')
 const { token } = require('./config.json')
 const profanities = require('./commands/json/bad_words.json')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
-const mongoose = require('mongoose');
 const fs = require('fs');
 const { EventEmitter } = require('stream');
 
@@ -21,7 +20,6 @@ for (const file of commandFiles) {
 const prefix = "?"
 
 client.once('ready', async () => {
-    await mongoose.connect('',{})
     console.log('Connected!')
     client.user.setPresence({
         status: 'dnd'
@@ -36,7 +34,7 @@ client.on('guildCreate', guild => {
         .setTitle('Thanks for inviting me!')
         .setDescription(`Hello! My name is BlueKit, Thanks for choosing me, I am made by BluefireCrystal & Beluga! The prefix is \`?\``)
         .setColor("#2682FF")
-    channel.send({embeds: [embed]})
+    channel.send({ embeds: [embed] })
 
 });
 
@@ -52,19 +50,7 @@ client.on('guildMemberAdd', async member => {
 })
 
 
-
-client.on('messageCreate', message => {
-    profanities.badwords.forEach(element => {
-        bluefire = client.users.cache.find(user => user.id === '880313471206588428')
-        if(message.author == bluefire) return;
-        if (message.content.toLowerCase().includes(element)) {
-            message.delete()
-            return message.channel.send('Do not swear!')
-
-        }
-
-    });
-
+client.on('messageCreate', async message => {
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -124,25 +110,25 @@ client.on('messageReactionAdd', async (reaction, user) => {
     const newsPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'News Ping')
     const botTesterRole = reaction.message.guild.roles.cache.find(role => role.name === 'Bot Testers.')
 
-        const announcementPingEmoji = '📢'
-        const newsPingEmoji = '📰'
-        const botTesterEmoji = '🤖'
-        
-    if(reaction.message.partial) await reaction.message.fetch();
-    if(reaction.partial) await reaction.fetch();
-    if(user.bot) return;
-    if(!reaction.message.guild) return;
-    if(reaction.message.channel.id == channel) {
-        if(reaction.emoji.name === announcementPingEmoji) {
+    const announcementPingEmoji = '📢'
+    const newsPingEmoji = '📰'
+    const botTesterEmoji = '🤖'
+
+    if (reaction.message.partial) await reaction.message.fetch();
+    if (reaction.partial) await reaction.fetch();
+    if (user.bot) return;
+    if (!reaction.message.guild) return;
+    if (reaction.message.channel.id == channel) {
+        if (reaction.emoji.name === announcementPingEmoji) {
             await reaction.message.guild.members.cache.get(user.id).roles.add(announcementPingRole);
         }
-        if(reaction.emoji.name === newsPingEmoji) {
+        if (reaction.emoji.name === newsPingEmoji) {
             await reaction.message.guild.members.cache.get(user.id).roles.add(newsPingRole);
         }
-        if(reaction.emoji.name === botTesterEmoji) {
+        if (reaction.emoji.name === botTesterEmoji) {
             await reaction.message.guild.members.cache.get(user.id).roles.add(botTesterRole);
         }
-    }else {
+    } else {
         return
     }
 });
@@ -151,55 +137,55 @@ client.on('messageReactionRemove', async (reaction, user) => {
     const announcementPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'Announcement Ping')
     const newsPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'News Ping')
     const botTesterRole = reaction.message.guild.roles.cache.find(role => role.name === 'Bot Testers.')
-        const announcementPingEmoji = '📢'
-        const newsPingEmoji = '📰'
-        const botTesterEmoji = '🤖'
+    const announcementPingEmoji = '📢'
+    const newsPingEmoji = '📰'
+    const botTesterEmoji = '🤖'
     const channel = '936873263768932372'
-    if(reaction.message.partial) await reaction.message.fetch(); 
-    if(reaction.partial) await reaction.fetch();
-    if(user.bot) return;
-    if(!reaction.message.guild) return;
-    if(reaction.message.channel.id == channel) {
-        if(reaction.emoji.name === announcementPingEmoji) {
+    if (reaction.message.partial) await reaction.message.fetch();
+    if (reaction.partial) await reaction.fetch();
+    if (user.bot) return;
+    if (!reaction.message.guild) return;
+    if (reaction.message.channel.id == channel) {
+        if (reaction.emoji.name === announcementPingEmoji) {
             await reaction.message.guild.members.cache.get(user.id).roles.remove(announcementPingRole);
         }
-        if(reaction.emoji.name === newsPingEmoji) {
+        if (reaction.emoji.name === newsPingEmoji) {
             await reaction.message.guild.members.cache.get(user.id).roles.remove(newsPingRole);
         }
-        if(reaction.emoji.name === botTesterEmoji) {
+        if (reaction.emoji.name === botTesterEmoji) {
             await reaction.message.guild.members.cache.get(user.id).roles.remove(botTesterRole);
-        } 
-    }else {
+        }
+    } else {
         return
     }
 });
 
-client.on('messageDelete', async (message) =>{
+client.on('messageDelete', async (message) => {
     guild = client.guilds.cache.get('932477320458010664')
-    if(message === guild){
-    deldMsgsChnl = client.channels.cache.get('933317900788441148')
-    const e = new MessageEmbed()
-    .setTitle(`Message Deleted!`)
-    .setDescription(message.content)
-    .setColor('#26F6F9')
-    .setFooter({text: message.author.username, iconURL: message.author.displayAvatarURL()})
-    .setTimestamp()
-    await deldMsgsChnl.send({embeds: [e]})
-    }else{
+    if (message === guild) {
+        deldMsgsChnl = client.channels.cache.get('933317900788441148')
+        const e = new MessageEmbed()
+            .setTitle(`Message Deleted!`)
+            .setDescription(message.content)
+            .setColor('#26F6F9')
+            .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
+            .setTimestamp()
+        await deldMsgsChnl.send({ embeds: [e] })
+    } else {
         return;
     }
 });
 
-client.on('messageUpdate', (message, newMessage) =>{
+client.on('messageUpdate', (message, newMessage) => {
     deldMsgsChnl = client.channels.cache.get('933317900788441148')
     const e = new MessageEmbed()
-    .setTitle(`Message Edited!`)
-    .setDescription(`:rewind: **Old Message**: ${message.content}
+        .setTitle(`Message Edited!`)
+        .setDescription(`:rewind: **Old Message**: ${message.content}
                      :fast_forward: **New Message**: ${newMessage.content}`)
-    .setColor('#26F6F9')
-    .setFooter({text: message.author.username, iconURL: message.author.displayAvatarURL()})
-    .setTimestamp(message.editedAt)
-    deldMsgsChnl.send({embeds: [e]})
+        .setColor('#26F6F9')
+        .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
+        .setTimestamp(message.editedAt)
+    deldMsgsChnl.send({ embeds: [e] })
 });
 
 client.on('interactionCreate', async interaction => {
