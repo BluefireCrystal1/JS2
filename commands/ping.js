@@ -7,7 +7,7 @@ module.exports = {
     description: helpList.ping.value,
     execute(message, args){
         message.reply(`Calculating Ping....`).then(async rslt =>{
-            const ping = rslt.createdTimestamp - message.createdTimestamp
+            const ping = Math.round(client.ws.ping)
 
             await rslt.edit(`Calculating Ping...`)
             await rslt.edit(`Calculating Ping..`)
@@ -15,16 +15,16 @@ module.exports = {
             await rslt.delete()
             const embed = new MessageEmbed()
             .setTitle('Pong 🏓')
-            .setDescription(`🟢 \`${ping/10}\` ms `)
+            .setDescription(`🟢 \`Api Latency : ${ping}\` ms `)
             .setColor('GREEN')
             const embed2 = new MessageEmbed()
             .setTitle('Pong 🏓')
-            .setDescription(`🔴 \`${ping/10}\` ms `)
+            .setDescription(`🔴 \`Api Latency : ${ping}\` ms `)
             .setColor('RED')
-            if(ping/10 > 50){
+            if(ping > 50){
             message.channel.send({content: ' ', embeds: [embed2]})
             }
-            if(ping/10 < 50){
+            if(ping < 50){
             message.channel.send({content: ' ', embeds: [embed]})
                 }
         })
