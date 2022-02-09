@@ -235,7 +235,7 @@ client.on('messageUpdate', (message, newMessage) => {
         .setDescription(`:rewind: **Old Message**: ${message.content}
                      :fast_forward: **New Message**: ${newMessage.content}`)
         .setColor('#26F6F9')
-        .setFooter({ text: message.member.username, iconURL: message.member.displayAvatarURL() })
+        .setFooter({ text: message.member.displayName, iconURL: message.member.displayAvatarURL() })
         .setTimestamp(message.editedAt)
     deldMsgsChnl.send({ embeds: [e] })
 });
