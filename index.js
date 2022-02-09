@@ -81,7 +81,6 @@ client.on('messageCreate', async message => {
         // console.log(profile)
         profile.save()
     } else {
-        console.log("was here")
         await profileData.update({
             $inc: {
                 messages: 1
