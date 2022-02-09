@@ -12,6 +12,7 @@ module.exports = {
             await rslt.edit(`Calculating Ping...`)
             await rslt.edit(`Calculating Ping..`)
             await rslt.edit(`Calculating Ping.`)
+            console.log(ping)
             await rslt.delete()
             const embed = new MessageEmbed()
             .setTitle('Pong 🏓')
@@ -26,7 +27,7 @@ module.exports = {
             }
             if(ping < 50){
             message.channel.send({content: ' ', embeds: [embed]})
-            console.log(ping)
+            
                 }
         })
 
