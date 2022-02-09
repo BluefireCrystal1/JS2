@@ -26,6 +26,7 @@ module.exports = {
             }
             if(ping < 50){
             message.channel.send({content: ' ', embeds: [embed]})
+            console.log(ping)
                 }
         })
 
