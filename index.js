@@ -1,4 +1,4 @@
-const { Client, Intents, Collection, MessageEmbed, GuildMember } = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed, GuildMember , MessageAttachment } = require('discord.js');
 const intJ = require('./interactions.js')
 const mongoose = require('mongoose')
 const row = require('./commands/credits.js')
@@ -7,7 +7,8 @@ const profileModel = require('./models/profileSchema')
 const profanities = require('./commands/json/bad_words.json')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 const fs = require('fs');
-const { EventEmitter } = require('stream');
+const { Canvacord } = require('canvacord')
+require('dotenv').config()
 
 client.commands = new Collection();
 
@@ -53,6 +54,20 @@ client.on('guildMemberAdd', async member => {
     const userRole = member.guild.roles.cache.find(role => role.name === 'User')
     await member.guild.channels.cache.get('932985164718538752').send({ embeds: [welcomeEmbed] })
     await member.roles.add(userRole)
+    //image manipulation
+
+    // const avatar = member.displayAvatarURL({ format: 'png' });
+    // const image = new Canvacord.Welcomer()
+    //     .setAvatar(avatar)
+    //     .textMessage('Welcome!')
+
+    // image.build()
+    //     .then(buffer => {
+    //         canvacord.write(buffer, 'image.png')
+    //     });
+    
+    // member.guild.channels.cache.get('932985164718538752').send('Test', {files: [img.image]})
+    //end
     let profileData = await profileModel.findOne({ userId: member.id })
     // console.log(profileData)// run again and rejoin 
     if (!profileData) {
@@ -220,7 +235,7 @@ client.on('messageUpdate', (message, newMessage) => {
         .setDescription(`:rewind: **Old Message**: ${message.content}
                      :fast_forward: **New Message**: ${newMessage.content}`)
         .setColor('#26F6F9')
-        .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
+        .setFooter({ text: message.member.username, iconURL: message.member.displayAvatarURL() })
         .setTimestamp(message.editedAt)
     deldMsgsChnl.send({ embeds: [e] })
 });
