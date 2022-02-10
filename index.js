@@ -1,4 +1,4 @@
-const { Client, Intents, Collection, MessageEmbed, GuildMember , MessageAttachment } = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed, GuildMember, MessageAttachment, Message } = require('discord.js');
 const intJ = require('./interactions.js')
 const mongoose = require('mongoose')
 const row = require('./commands/credits.js')
@@ -7,8 +7,10 @@ const profileModel = require('./models/profileSchema')
 const profanities = require('./commands/json/bad_words.json')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 const fs = require('fs');
-const { Canvacord } = require('canvacord')
+const Canvas = require('canvas')
 require('dotenv').config()
+Canvas.registerFont('./Insanibc.ttf', { family: 'customFont' })
+const canvacord = require("canvacord");
 
 client.commands = new Collection();
 
@@ -44,46 +46,75 @@ client.on('guildCreate', guild => {
     channel.send({ embeds: [embed] })
 
 });
+const applyText = (canvas, text) => {
+    const context = canvas.getContext('2d');
+    let fontSize = 70;
+
+    do {
+        context.font = `${fontSize -= 10}px "customFont"`;
+    } while (context.measureText(text).width > canvas.width - 300);
+
+    return context.font;
+};
+
 
 client.on('guildMemberAdd', async member => {
-    console.log("Someone joined")
     const welcomeEmbed = new MessageEmbed()
         .setTitle('Welcome!')
         .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('936495957531566080').toString() + ` and have a nice day!`)
         .setColor("#2682FF")
     const userRole = member.guild.roles.cache.find(role => role.name === 'User')
-    await member.guild.channels.cache.get('932985164718538752').send({ embeds: [welcomeEmbed] })
+    const general = await member.guild.channels.cache.get('932985164718538752')
     await member.roles.add(userRole)
-    //image manipulation
-
-    // const avatar = member.displayAvatarURL({ format: 'png' });
-    // const image = new Canvacord.Welcomer()
-    //     .setAvatar(avatar)
-    //     .textMessage('Welcome!')
-
-    // image.build()
-    //     .then(buffer => {
-    //         canvacord.write(buffer, 'image.png')
-    //     });
-    
-    // member.guild.channels.cache.get('932985164718538752').send('Test', {files: [img.image]})
-    //end
     let profileData = await profileModel.findOne({ userId: member.id })
-    // console.log(profileData)// run again and rejoin 
     if (!profileData) {
         let profile = await profileModel.create({
             userId: member.id,
             messages: 0,
             level: 0,
             xp: 0,
-        })//whot nexx
-        // console.log(profile)
+        })
         profile.save()
     }
+    //image manipulation------------------------------------
+    const canvas = Canvas.createCanvas(700, 250);
+    const context = canvas.getContext('2d');
+
+    await Canvas.loadImage('https://i.imgur.com/YG47fdL.png').then(async (background) => {
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+        context.font = applyText(canvas, member.displayName);
+        context.fillStyle = '#ffffff';
+        context.fillText(member.displayName, canvas.width / 2.5, canvas.height / 1.8);
+
+        context.font = '26px "customFont"';
+        context.fillStyle = '#26C9F9';
+        context.fillText(`Welcome to ${member.guild.name}!`, canvas.width / 2.5, canvas.height / 3.2);
+
+        context.font = '80px "customFont"';
+        context.fillStyle = '#26C9F9';
+        context.fillText(`#${member.guild.memberCount}`, canvas.width / 2.5, canvas.height / 1.15);
+
+        context.beginPath();
+        context.arc(125, 125, 100, 0, Math.PI * 2, true);
+        context.closePath();
+        context.clip();
+
+        const avatar = await Canvas.loadImage(member.displayAvatarURL({ format: 'png' }));
+        context.drawImage(avatar, 25, 25, 200, 200);
+        const attachment = new MessageAttachment(canvas.toBuffer(), 'image.png');
+
+        general.send({ embeds: [welcomeEmbed], files: [attachment] })
+    })
 })
+    //end------------------------------------
+
+
 
 
 client.on('messageCreate', async message => {
+
+
     let profileData = await profileModel.findOne({ userId: message.author.id })
     if (!profileData) {
         console.log("profile data created")
@@ -93,7 +124,6 @@ client.on('messageCreate', async message => {
             level: 0,
             xp: 0,
         })
-        // console.log(profile)
         profile.save()
     } else {
         await profileData.updateOne({
@@ -154,6 +184,9 @@ client.on('messageCreate', async message => {
     if (command === 'reactionrole' || command === 'rr') {
         client.commands.get('rr').execute(message, args, client);
     }
+    if (command === 'triggered') {
+        client.commands.get('triggered').execute(message, args, client);
+    }
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
@@ -209,22 +242,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
         }
     } else {
         return
-    }
-});
-
-client.on('messageDelete', async (message) => {
-    guild = client.guilds.cache.get('932477320458010664')
-    if (message === guild) {
-        deldMsgsChnl = client.channels.cache.get('933317900788441148')
-        const e = new MessageEmbed()
-            .setTitle(`Message Deleted!`)
-            .setDescription(message.content)
-            .setColor('#26F6F9')
-            .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
-            .setTimestamp()
-        await deldMsgsChnl.send({ embeds: [e] })
-    } else {
-        return;
     }
 });
 

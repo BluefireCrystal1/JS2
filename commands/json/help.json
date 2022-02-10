@@ -90,6 +90,12 @@
         "section": "utility",
         "inline":true
     },
+    "triggered": {
+        "name": "`?triggered`",
+        "value": "Creates a triggered image with your Pfp",
+        "section": "fun",
+        "inline":true
+    },
     "credits": {
         "name": "`?credits`",
         "value": "**Shows who contributed to the Bot**",
