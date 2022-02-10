@@ -8,8 +8,6 @@ module.exports = {
     description: helpList.trash.value,
     async execute(message, ...args) {
         const member = message.mentions.users.first() || message.author
-        const bluefire = message.guild.users.cache.find(user => user.id === '880313471206588428')
-        if(member === bluefire) return message.channel.send('You cannot run this command on that member')
         let avatar = member.displayAvatarURL({ dynamic: false, format: 'png' });
         let image = await canvacord.Canvas.trash(avatar);
         let attachment = new MessageAttachment(image, "triggered.gif");
