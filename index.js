@@ -187,6 +187,9 @@ client.on('messageCreate', async message => {
     if (command === 'triggered') {
         client.commands.get('triggered').execute(message, args, client);
     }
+    if (command === 'trash') {
+        client.commands.get('trash').execute(message, args, client);
+    }
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {

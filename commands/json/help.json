@@ -96,6 +96,12 @@
         "section": "fun",
         "inline":true
     },
+    "trash": {
+        "name": "`?trash`",
+        "value": "Compares someone to trash",
+        "section": "fun",
+        "inline":true
+    },
     "credits": {
         "name": "`?credits`",
         "value": "**Shows who contributed to the Bot**",
