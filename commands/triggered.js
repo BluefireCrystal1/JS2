@@ -8,7 +8,7 @@ module.exports = {
     description: helpList.triggered.value,
     async execute(message, ...args) {
         const member = message.mentions.users.first() || message.author;
-        const bluefire = client.users.cache.find(user => user.id === '880313471206588428')
+        const bluefire = message.guild.users.cache.find(user => user.id === '880313471206588428')
         if(member === bluefire) return message.channel.send('You cannot run this command on that member');
         let avatar = member.displayAvatarURL({ dynamic: false, format: 'png' });
         let image = await canvacord.Canvas.trigger(avatar);
