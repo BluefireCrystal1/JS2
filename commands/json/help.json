@@ -102,6 +102,18 @@
         "section": "fun",
         "inline":true
     },
+    "level": {
+        "name": "`?level`",
+        "value": "Shows your level",
+        "section": "fun",
+        "inline":true
+    },
+    "serverstats": {
+        "name": "`?serverstats / ?serverinfo`",
+        "value": "Shows info about the server",
+        "section": "fun",
+        "inline":true
+    },
     "credits": {
         "name": "`?credits`",
         "value": "**Shows who contributed to the Bot**",

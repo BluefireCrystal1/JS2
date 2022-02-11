@@ -5,7 +5,7 @@ const row = require('./commands/credits.js')
 const profileModel = require('./models/profileSchema')
 // const { token, mongoUrl } = require('./config.json')
 const profanities = require('./commands/json/bad_words.json')
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
+const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES,Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 const fs = require('fs');
 const Canvas = require('canvas')
 require('dotenv').config()
@@ -59,6 +59,7 @@ const applyText = (canvas, text) => {
 
 
 client.on('guildMemberAdd', async member => {
+
     const welcomeEmbed = new MessageEmbed()
         .setTitle('Welcome!')
         .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('936495957531566080').toString() + ` and have a nice day!`)
@@ -107,13 +108,13 @@ client.on('guildMemberAdd', async member => {
         general.send({ embeds: [welcomeEmbed], files: [attachment] })
     })
 })
-    //end------------------------------------
+//end------------------------------------
 
 
 
 
 client.on('messageCreate', async message => {
-
+    
 
     let profileData = await profileModel.findOne({ userId: message.author.id })
     if (!profileData) {
@@ -128,14 +129,30 @@ client.on('messageCreate', async message => {
     } else {
         await profileData.updateOne({
             $inc: {
-                messages: 1
+                messages: 1,
+                xp: 0.7
             }
         })
+
+        const messageConst = 200
+        if (await profileData.xp > profileData.level * messageConst) {
+            await profileData.updateOne({
+                $inc: {
+                    level: 1,
+                    xp: -profileData.xp
+                }
+            })
+            const levelUpChannel = await message.guild.channels.cache.get('941660690433863770')
+            levelUpChannel.send(`<@!${message.author.id}> Has reached level ${Math.round(profileData.level)}!`)
+
+        }
         await profileData.save()
+
     }
+    if (message.content.startsWith(`<@!${client.user.id}>`)) message.channel.send(`My prefix is \`${prefix}\``)
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-
+    
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
@@ -189,6 +206,12 @@ client.on('messageCreate', async message => {
     }
     if (command === 'trash') {
         client.commands.get('trash').execute(message, args, client);
+    }
+    if (command === 'level' || command === 'lvl') {
+        client.commands.get('level').execute(message, args, client);
+    }
+    if (command === 'serverstats' || command === 'serverinfo') {
+        client.commands.get('serverstats').execute(message, args, client);
     }
 });
 
