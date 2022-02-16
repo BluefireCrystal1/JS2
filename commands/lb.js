@@ -77,6 +77,10 @@ module.exports = {
                         context.fillStyle = '#33E3FF';
                         context.fillText(content += `${nameofuser.username}#${nameofuser.discriminator} | LVL: ${Math.round(element.level)}\n\n`, 226, 130);
                         
+                        context.beginPath();
+                        context.arc(183, startYCord, 25, 25, Math.PI * 2, true);
+                        context.closePath();
+                        context.clip()
                         const pfp = await Canvas.loadImage(nameofuser.displayAvatarURL({ format: 'png' }));
                         context.drawImage(pfp, 162, startYCord, 50, 50);
                         startYCord += diff
