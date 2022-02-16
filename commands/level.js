@@ -50,7 +50,7 @@ module.exports = {
         context.fillStyle = '#ffffff';
         context.fillText(name, 197, 120);
         //-----------------
-        context.font = "26px Impact";
+        context.font = "26px 'customFont'";
         context.fillStyle = '#ffffff';
         context.textAlign = 'right';
         context.fillText(`XP ${xp}/${level * 200}`, 653, 161);
