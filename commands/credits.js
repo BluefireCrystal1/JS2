@@ -9,13 +9,13 @@ module.exports = {
         const embed = new MessageEmbed()
             .setAuthor({ name: 'Bluefire, Beluga' })
             .setTitle("Credits")
-            .setDescription('This bot is made by **BluefireCrystal#1218** & **Beluga#0099**')
+            .setDescription('This bot is made by **BluefireCrystal#3506** & **Beluga#0099**')
             .setColor('BLUE')
         const row = new MessageActionRow()
         .addComponents(
             new MessageButton()
                 .setCustomId('Contact')
-                .setLabel('DM us?')
+                .setLabel('Talk to us?')
                 .setStyle('PRIMARY'),
             
         )

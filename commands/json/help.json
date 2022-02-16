@@ -105,13 +105,25 @@
     "level": {
         "name": "`?level`",
         "value": "Shows your level",
-        "section": "fun",
+        "section": "utility",
         "inline":true
     },
     "serverstats": {
         "name": "`?serverstats / ?serverinfo`",
         "value": "Shows info about the server",
-        "section": "fun",
+        "section": "utility",
+        "inline":true
+    },
+    "lb": {
+        "name": "`?lb / ?leaderboard`",
+        "value": "Shows a list of people who has the most Level",
+        "section": "utility",
+        "inline":true
+    },
+    "ttt": {
+        "name": "`?ttt / ?tictactoe`",
+        "value": "Shows a list of people who has the most Level",
+        "section": "utility",
         "inline":true
     },
     "credits": {

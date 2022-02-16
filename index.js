@@ -4,13 +4,13 @@ const mongoose = require('mongoose')
 const row = require('./commands/credits.js')
 const profileModel = require('./models/profileSchema')
 // const { token, mongoUrl } = require('./config.json')
-const profanities = require('./commands/json/bad_words.json')
-const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES,Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
+const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 const fs = require('fs');
 const Canvas = require('canvas')
 require('dotenv').config()
 Canvas.registerFont('./Insanibc.ttf', { family: 'customFont' })
 const canvacord = require("canvacord");
+const talkedRecently = new Set();
 
 client.commands = new Collection();
 
@@ -114,7 +114,7 @@ client.on('guildMemberAdd', async member => {
 
 
 client.on('messageCreate', async message => {
-    
+
 
     let profileData = await profileModel.findOne({ userId: message.author.id })
     if (!profileData) {
@@ -127,10 +127,12 @@ client.on('messageCreate', async message => {
         })
         profile.save()
     } else {
+        xp=0.7
+        if (message.content === "Abracadabra level up(7)!!!"){xp=70}    
         await profileData.updateOne({
             $inc: {
                 messages: 1,
-                xp: 0.7
+                xp: xp
             }
         })
 
@@ -143,16 +145,22 @@ client.on('messageCreate', async message => {
                 }
             })
             const levelUpChannel = await message.guild.channels.cache.get('941660690433863770')
-            levelUpChannel.send(`<@!${message.author.id}> Has reached level ${Math.round(profileData.level)}!`)
+            levelUpChannel.send(`<@!${message.author.id}> Has reached level ${Math.round(profileData.level + 1)}!`)
 
         }
         await profileData.save()
+        talkedRecently.add(message.author.id);
+        setTimeout(() => {
+            // Removes the user from the set after a minute
+            talkedRecently.delete(message.author.id);
+        }, 2000);
+
 
     }
     if (message.content.startsWith(`<@!${client.user.id}>`)) message.channel.send(`My prefix is \`${prefix}\``)
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    
+
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
@@ -163,7 +171,7 @@ client.on('messageCreate', async message => {
         client.commands.get('purge').execute(message, args);
     }
     if (command === 'ban') {
-        client.commands.get('ban').execute(message, args);
+        client.commands.get('ban').execute(message, args, client);
     }
     if (command === 'kick') {
         client.commands.get('kick').execute(message, args);
@@ -212,6 +220,12 @@ client.on('messageCreate', async message => {
     }
     if (command === 'serverstats' || command === 'serverinfo') {
         client.commands.get('serverstats').execute(message, args, client);
+    }
+    if (command === 'lb' || command === 'leaderboard') {
+        client.commands.get('lb').execute(message, args, client);
+    }
+    if (command === 'ttt' || command === 'tictactoe') {
+        client.commands.get('ttt').execute(message, args, client);
     }
 });
 
@@ -271,21 +285,11 @@ client.on('messageReactionRemove', async (reaction, user) => {
     }
 });
 
-client.on('messageUpdate', (message, newMessage) => {
-    deldMsgsChnl = client.channels.cache.get('933317900788441148')
-    const e = new MessageEmbed()
-        .setTitle(`Message Edited!`)
-        .setDescription(`:rewind: **Old Message**: ${message.content}
-                     :fast_forward: **New Message**: ${newMessage.content}`)
-        .setColor('#26F6F9')
-        .setFooter({ text: message.member.displayName, iconURL: message.member.displayAvatarURL() })
-        .setTimestamp(message.editedAt)
-    deldMsgsChnl.send({ embeds: [e] })
-});
+
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return;
-    intJ.CreditButton(interaction)
+    intJ.Buttons(interaction)
 });
 
 client.login(process.env.TOKEN);
