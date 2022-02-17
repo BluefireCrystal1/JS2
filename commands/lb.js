@@ -17,7 +17,6 @@ module.exports = {
         const imageCords = [[20, 20], [40, 60], [40, 60], [50, 60], [60, 60], [70, 60], [80, 60], [90, 60], [100, 60], [110, 60]]
         const canvas = Canvas.createCanvas(920, 864);
         const context = canvas.getContext('2d');
-        //location does not work use i.imgur
         const background = await Canvas.loadImage('https://i.imgur.com/2nhLQQM.png')
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
 

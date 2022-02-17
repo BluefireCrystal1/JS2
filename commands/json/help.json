@@ -126,6 +126,12 @@
         "section": "utility",
         "inline":true
     },
+    "coinflip": {
+        "name": "`?cf / ?coinflip`",
+        "value": "Flips a coin",
+        "section": "utility",
+        "inline":true
+    },
     "credits": {
         "name": "`?credits`",
         "value": "**Shows who contributed to the Bot**",

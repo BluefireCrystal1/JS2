@@ -18,6 +18,12 @@ module.exports = {
         message.channel.bulkDelete(messages);
         message.channel.send(`Deleted!`).then(msg => { setTimeout(() => msg.delete(), 5000) })
 
+      try {
+
+      }catch(err) {
+        message.channel.send('You cannot delete messages that are 14 days or old')
+      }
+
 
       })
     } else {

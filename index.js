@@ -227,6 +227,9 @@ client.on('messageCreate', async message => {
     if (command === 'ttt' || command === 'tictactoe') {
         client.commands.get('ttt').execute(message, args, client);
     }
+    if (command === 'coinflip' || command === 'cf') {
+        client.commands.get('coinflip').execute(message, args, client);
+    }
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
