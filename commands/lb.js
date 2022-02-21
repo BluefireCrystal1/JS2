@@ -79,7 +79,6 @@ module.exports = {
                         context.beginPath();
                         context.arc(169, startYCord, 25, 25, Math.PI * 2, true);
                         context.closePath();
-                        context.clip()
                         const pfp = await Canvas.loadImage(nameofuser.displayAvatarURL({ format: 'png' }));
                         context.drawImage(pfp, 162, startYCord, 50, 50);
                         startYCord += diff

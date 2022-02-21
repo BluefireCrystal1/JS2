@@ -22,7 +22,7 @@ for (const file of commandFiles) {
     client.commands.set(commands.name, commands);
 }
 
-const prefix = "?"
+const prefix = "?" || `<@!${client.user.id}>`
 
 client.once('ready', async () => {
     mongoose.connect(process.env.mongoUrl,
@@ -141,7 +141,7 @@ client.on('messageCreate', async message => {
             await profileData.updateOne({
                 $inc: {
                     level: 1,
-                    xp: -profileData.xp
+                    xp: -profileData.level * messageConst
                 }
             })
             const levelUpChannel = await message.guild.channels.cache.get('941660690433863770')
