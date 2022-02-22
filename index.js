@@ -174,10 +174,10 @@ client.on('messageCreate', async message => {
         client.commands.get('ban').execute(message, args, client);
     }
     if (command === 'kick') {
-        client.commands.get('kick').execute(message, args);
+        client.commands.get('kick').execute(message, args, client);
     }
     if (command === 'unban') {
-        client.commands.get('unban').execute(message, args);
+        client.commands.get('unban').execute(message, args, client);
     }
     if (command === 'help') {
         client.commands.get('help').execute(message, args);

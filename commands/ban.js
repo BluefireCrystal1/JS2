@@ -22,6 +22,7 @@ module.exports = {
         if(member === client.user) {
             return message.channel.send('I Couldn\'t Ban that person')
         }
+        if(member.permissions.has('ADMINISTRATOR')) return message.channel.send('The person is a mod/admin, I cant ban them')
         }else{
             return message.reply('You do not have enough permissions')
         }
