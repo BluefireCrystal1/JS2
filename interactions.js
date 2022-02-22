@@ -5,7 +5,7 @@ const row3 = require('./commands/ttt.js')
 const wait = require('util').promisify(setTimeout);
 async function Buttons(interaction) {
     if (interaction.customId === 'Contact') {
-        interaction.channel.send({ content: 'Message us on our server: \`https://discord.gg/up4MbsHzz5\`' })
+        interaction.channel.send({ content: 'Message us on our server: https://discord.gg/up4MbsHzz5' })
         await interaction.update({ components: [] })
     }
     //--------------- TICTACTOE
