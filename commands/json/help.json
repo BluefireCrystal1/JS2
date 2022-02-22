@@ -12,28 +12,10 @@
         "section": "info",
         "inline":true
     },
-    "ban": {
-        "name": "`?ban @mentionsomeone`",
-        "value": "Bans a member",
-        "section": "moderation",
-        "inline":true
-    },
-    "unban": {
-        "name": "`?unban @mentionsomeone`",
-        "value": "Unbans a member",
-        "section": "moderation",
-        "inline":true
-    },
     "purge": {
         "name": "`?purge (limit 100)`",
         "value": "Deletes a specified amount of messages",
         "section": "utility",
-        "inline":true
-    },
-    "kick": {
-        "name": "`?kick @mentionSomeone`",
-        "value": "Kicks a member",
-        "section": "moderation",
         "inline":true
     },
     "ping": {
