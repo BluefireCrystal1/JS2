@@ -19,7 +19,11 @@ module.exports = {
             }else{
                 message.channel.send("Something went wrong (You didnt specify a member)");
             }
-            if(member == client.user) return message.channel.send('I can\'t kick myself')
+            try {
+
+            }catch(err) {
+                message.channel.send("Something went wrong (You didnt specify a member/You tried to ban me)");
+            }
         }else{
             return message.reply('You do not have enough permissions')
         }
