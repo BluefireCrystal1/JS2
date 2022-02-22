@@ -20,7 +20,6 @@ module.exports = {
                 message.channel.send("Something went wrong (You didnt specify a member)");
             }
             if(member == client.user) return message.channel.send('I can\'t kick myself')
-            if(member.permissions.has('ADMINISTRATOR')) return message.channel.send('The person is a mod/admin, I cant kick them')
         }else{
             return message.reply('You do not have enough permissions')
         }
