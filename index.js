@@ -62,10 +62,10 @@ client.on('guildMemberAdd', async member => {
 
     const welcomeEmbed = new MessageEmbed()
         .setTitle('Welcome!')
-        .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('947037203673006090').toString() + ` and have a nice day!`)
+        .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('947046718963351562').toString() + ` and have a nice day!`)
         .setColor("#2682FF")
     const userRole = member.guild.roles.cache.find(role => role.name === 'User')
-    const general = await member.guild.channels.cache.get('947037205552041984')
+    const general = await member.guild.channels.cache.get('947046774646931527')
     await member.roles.add(userRole)
     let profileData = await profileModel.findOne({ userId: member.id })
     if (!profileData) {
