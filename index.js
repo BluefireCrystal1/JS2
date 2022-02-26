@@ -62,10 +62,10 @@ client.on('guildMemberAdd', async member => {
 
     const welcomeEmbed = new MessageEmbed()
         .setTitle('Welcome!')
-        .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('936495957531566080').toString() + ` and have a nice day!`)
+        .setDescription(`Welcome **${member.displayName}** our server! Follow the ` + member.guild.channels.cache.get('947037203673006090').toString() + ` and have a nice day!`)
         .setColor("#2682FF")
     const userRole = member.guild.roles.cache.find(role => role.name === 'User')
-    const general = await member.guild.channels.cache.get('932985164718538752')
+    const general = await member.guild.channels.cache.get('947037205552041984')
     await member.roles.add(userRole)
     let profileData = await profileModel.findOne({ userId: member.id })
     if (!profileData) {
@@ -144,7 +144,7 @@ client.on('messageCreate', async message => {
                     xp: -profileData.level * messageConst
                 }
             })
-            const levelUpChannel = await message.guild.channels.cache.get('941660690433863770')
+            const levelUpChannel = await message.guild.channels.cache.get('947038376236814336')
             levelUpChannel.send(`<@!${message.author.id}> Has reached level ${Math.round(profileData.level + 1)}!`)
 
         }
@@ -233,7 +233,7 @@ client.on('messageCreate', async message => {
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
-    const channel = '936873263768932372'
+    const channel = '947046639883943987'
     const announcementPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'Announcement Ping')
     const newsPingRole = reaction.message.guild.roles.cache.find(role => role.name === 'News Ping')
     const botTesterRole = reaction.message.guild.roles.cache.find(role => role.name === 'Bot Testers.')
@@ -268,7 +268,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
     const announcementPingEmoji = '📢'
     const newsPingEmoji = '📰'
     const botTesterEmoji = '🤖'
-    const channel = '936873263768932372'
+    const channel = '947046639883943987'
     if (reaction.message.partial) await reaction.message.fetch();
     if (reaction.partial) await reaction.fetch();
     if (user.bot) return;

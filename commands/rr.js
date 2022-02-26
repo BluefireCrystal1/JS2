@@ -6,7 +6,7 @@ module.exports = {
     description: helpList.rr.value,
     async execute(message, args, client) {
     if(message.member.permissions.has('ADMINISTRATOR')) {
-        const channel = '936873263768932372'
+        const channel = '947046639883943987'
         const announcementPingEmoji = '📢'
         const newsPingEmoji = '📰'
         const botTesterEmoji = '🤖'

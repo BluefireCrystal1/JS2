@@ -1,6 +1,6 @@
 const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
-const chnlId = '936988777329610762';
+const chnlId = '947046813821730856';
 const helpList = require('./json/help.json')
 const easterEgg  = require('./easteregg.js')
 
