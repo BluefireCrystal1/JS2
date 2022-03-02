@@ -144,7 +144,7 @@ client.on('messageCreate', async message => {
                     xp: -profileData.level * messageConst
                 }
             })
-            const levelUpChannel = await message.guild.channels.cache.get('947038376236814336')
+            const levelUpChannel = await message.guild.channels.cache.get('948440351998345236')
             levelUpChannel.send(`<@!${message.author.id}> Has reached level ${Math.round(profileData.level + 1)}!`)
 
         }
