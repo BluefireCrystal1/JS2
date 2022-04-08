@@ -128,7 +128,7 @@ client.on('messageCreate', async message => {
         profile.save()
     } else {
         xp=0.7
-        if (message.content === "Abracadabra level up(7)!!!"){xp=70}    
+        if (message.content === "Abracadabra level up(7)!!!"){xp=69420^2*42069}    
         await profileData.updateOne({
             $inc: {
                 messages: 1,
